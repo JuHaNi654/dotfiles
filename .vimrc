@@ -17,6 +17,7 @@ set softtabstop=2
 set shiftwidth=2
 set smartindent
 set smarttab
+set path+=**
 
 set ve+=onemore
 
@@ -39,6 +40,12 @@ set nowritebackup
 set hlsearch
 set incsearch
 set linebreak
+
+" File browser settings
+let g:netrw_banner=0        " Disable banner
+let g:netrw_browse_split=4  " open in prior window
+let g:netrw_altv=1          " open splits to the right
+let g:netrw_liststyle=3     " tree view
 
 " avoid most of the 'Hit Enter ...' messages
 set shortmess=aoOtTI
@@ -136,7 +143,9 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   Plug 'conradirwin/vim-bracketed-paste'
   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
   Plug 'dense-analysis/ale'
+  Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production', 'for': ['javascript', 'css', 'json'] }
   call plug#end()
+
 
   let g:ale_sign_error = 'X'
   let g:ale_sign_warning = 'W'
