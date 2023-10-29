@@ -1,6 +1,6 @@
 #!/bin/bash
 does_exists () {
-  if ! command -v $1 &> /dev/null
+  if ! command -v "$1" &> /dev/null
   then
     echo "$1 could not be found"
     exit
@@ -8,8 +8,8 @@ does_exists () {
 }
 
 commands=("curl" "git")
-for cmd in ${commands[@]}; do
-  does_exists $cmd
+for cmd in "${commands[@]}"; do
+  does_exists "$cmd"
 done 
 
 if ! command -v vim &> /dev/null
