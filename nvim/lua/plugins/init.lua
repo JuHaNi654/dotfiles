@@ -11,7 +11,7 @@ return {
     opts = {
       ensure_installed = {
         "lua-language-server", "stylua", "gopls",
-        "html-lsp", "css-lsp" , "prettier"
+        "html-lsp", "templ", "css-lsp" , "prettier"
       },
     },
   },
@@ -53,8 +53,8 @@ return {
   	"nvim-treesitter/nvim-treesitter",
   	opts = {
   		ensure_installed = {
-  			"vim", "lua", "vimdoc",
-       "html", "css", "printf", "vim", "vimdoc"
+  			"vim", "templ", "lua", "vimdoc", "typescript", "javascript",
+       "html", "css", "printf", "vim", "vimdoc", "sql"
   		},
   	},
     lazy = false
