@@ -4,7 +4,7 @@ local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
 local lspconfig = require "lspconfig"
-local servers = { "html", "cssls", "gopls", "tsserver", "templ" }
+local servers = { "html", "ts_ls", "cssls", "gopls", "templ" }
 local util = require "lspconfig/util"
 
 -- lsps with default config
@@ -36,7 +36,7 @@ lspconfig.gopls.setup {
 }
 
 -- typescript
-lspconfig.tsserver.setup {
+lspconfig["ts_ls"].setup {
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,
