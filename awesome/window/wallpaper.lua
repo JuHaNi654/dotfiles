@@ -16,7 +16,7 @@ end
 math.randomseed(os.time())
 local f = math.random(1, #files)
 
-beautiful.get().wallpaper = path .. "/" .. files[f]
+beautiful.get().wallpaper = path .. "/synthwave_1.jpg"
 
 local function set_wallpaper(s)
 	-- Wallpaper

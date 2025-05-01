@@ -6,10 +6,17 @@ local awful = require("awful")
 require("awful.autofocus")
 require("awful.hotkeys_popup.keys")
 local notify_error = require("notify").error
+local naughty = require("naughty")
 
 -- Startup errors
 if awesome.startup_errors then
 	notify_error(awesome.startup_errors)
+end
+
+for s in screen do
+  s.padding = {
+    top = 40
+  }
 end
 
 do
@@ -28,24 +35,13 @@ end
 -- Theme
 require("theme")
 
--- Run external apps 
-require('apps')
+-- Run external apps
+require("apps")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-	awful.layout.suit.floating,
 	awful.layout.suit.tile,
-	awful.layout.suit.tile.left,
-	awful.layout.suit.tile.bottom,
-	awful.layout.suit.tile.top,
-	awful.layout.suit.fair,
-	awful.layout.suit.fair.horizontal,
-	awful.layout.suit.spiral,
-	awful.layout.suit.spiral.dwindle,
 	awful.layout.suit.max,
-	awful.layout.suit.max.fullscreen,
-	awful.layout.suit.magnifier,
-	awful.layout.suit.corner.nw,
 }
 
 -- Screen

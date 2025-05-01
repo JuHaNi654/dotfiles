@@ -6,5 +6,5 @@ local gears = require('gears')
 beautiful.init(gears.filesystem.get_configuration_dir() .. "theme/theme.lua")
 
 -- Custom configs
-beautiful.useless_gap=10
+beautiful.useless_gap=4
 beautiful.border_width=0

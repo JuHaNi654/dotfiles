@@ -49,7 +49,27 @@ local tasklist_buttons = gears.table.join(
 screen.connect_signal("property::geometry", set_wallpaper)
 awful.screen.connect_for_each_screen(function(s)
 	set_wallpaper(s)
-	awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+
+  awful.tag.add(" ", {
+    screen = s,
+    layout = awful.layout.layouts[1],
+    selected = true
+  })
+
+  awful.tag.add(" ", {
+    screen = s,
+    layout = awful.layout.layouts[1]
+  })
+
+  awful.tag.add(" ", {
+    screen = s,
+    layout = awful.layout.layouts[1]
+  })
+
+  awful.tag.add("󰚩 ", {
+    screen = s,
+    layout = awful.layout.layouts[1]
+  })
 
   s.mypromptbox = awful.widget.prompt()
 	s.mylayoutbox = awful.widget.layoutbox(s)
