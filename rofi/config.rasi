@@ -1,0 +1,127 @@
+/**
+ * rofi -dump-theme output.
+ * Rofi version: 1.7.5
+ **/
+* {
+    rich-black:       rgba ( 9, 12, 18, 100%);
+    licorice:         rgba ( 27, 16, 17, 100%);
+    atomic-tangerine: rgba ( 226, 148, 109, 100%);
+    caput-mortuum:    rgba ( 84, 48, 44, 100%);
+    night:            rgba ( 15, 15, 19, 100%);
+    rust:             rgba ( 181, 75, 37, 100%);
+    paynes-gray:      rgba ( 75, 93, 107, 100%);
+    charcoal:         rgba ( 49, 62, 71, 100%);
+}
+
+element {
+    padding: 1px ;
+    cursor:  pointer;
+    spacing: 5px ;
+    border:  0;
+}
+element normal.normal {
+    background-color: var(rich-black);
+    text-color:       var(atomic-tangerine);
+}
+element normal.urgent {
+    background-color: var(rich-black);
+    text-color:       var(atomic-tangerine);
+}
+element normal.active {
+    background-color: var(rich-black);
+    text-color:       var(atomic-tangerine);
+}
+element selected.normal {
+    background-color: var(night);
+    text-color:       var(rust);
+}
+element selected.urgent {
+    background-color: var(night);
+    text-color:       var(rust);
+}
+element selected.active {
+    background-color: var(rich-black);
+    text-color:       var(atomic-tangerine);
+}
+element alternate.normal {
+    background-color: var(rich-black);
+    text-color:       var(atomic-tangerine);
+}
+element alternate.urgent {
+    background-color: var(rich-black);
+    text-color:       var(atomic-tangerine);
+}
+element alternate.active {
+    background-color: var(night);
+    text-color:       var(rust);
+}
+
+element-text {
+    padding: 5 0; 
+    background-color: transparent;
+    cursor:           inherit;
+    highlight:        inherit;
+    text-color:       inherit;
+}
+element-icon {
+  background-color: transparent;
+    size:             1.0000em ;
+    cursor:           inherit;
+    text-color:       inherit;
+}
+
+window {
+    padding:          10;
+    background-color: var(rich-black);
+}
+mainbox {
+    padding: 0;
+    border:  0;
+}
+
+listview {
+    padding:      0;
+    scrollbar:    false;
+    spacing:      0;
+    fixed-height: 0;
+    border:       none;
+}
+
+num-filtered-rows {
+    expand:     false;
+    text-color: var(atomic-tangerine);
+}
+
+num-rows {
+    expand:     false;
+    text-color: var(atomic-tangerine);
+}
+
+textbox-num-sep {
+    expand:     false;
+    str:        "|";
+    text-color: var(charcoal);
+}
+inputbar {
+    padding:    20 0;
+    spacing:    0px ;
+    text-color: var(charcoal);
+    children:   [ "prompt","textbox-prompt-colon","entry","num-filtered-rows","textbox-num-sep","num-rows","case-indicator" ];
+}
+
+entry {
+    text-color:        var(atomic-tangerine);
+    cursor:            text;
+    spacing:           0;
+    placeholder-color: Gray;
+    placeholder:       "Type to filter";
+}
+
+prompt {
+    enabled: false;
+}
+
+textbox-prompt-colon {
+    enabled: false;
+}
+
