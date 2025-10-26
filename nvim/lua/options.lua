@@ -1,8 +1,8 @@
 require "nvchad.options"
 
--- add yours here!
 local o = vim.o
--- o.cursorlineopt ='both' -- to enable cursorline!
+o.cursorlineopt ='both' -- to enable cursorline!
+
 o.autoindent = true
 o.expandtab = true
 o.tabstop = 2
@@ -20,4 +20,3 @@ o.colorcolumn = "73"
 
 o.incsearch = true
 o.linebreak = true
-

@@ -1,43 +1,15 @@
--- EXAMPLE 
-local on_attach = require("nvchad.configs.lspconfig").on_attach
-local on_init = require("nvchad.configs.lspconfig").on_init
-local capabilities = require("nvchad.configs.lspconfig").capabilities
+require("nvchad.configs.lspconfig").defaults()
 
-local lspconfig = require "lspconfig"
-local servers = { "html", "ts_ls", "cssls", "gopls", "templ" }
-local util = require "lspconfig/util"
+local servers = { 
+  html = {},
+  ts_ls = {},
+  cssls = {},
+  gopls = {},
+}
 
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
-    on_init = on_init,
-    capabilities = capabilities,
-  }
+for name, opts in pairs(servers) do 
+  vim.lsp.config(name, opts)
+  vim.lsp.enable(name)
 end
 
--- Golang
-lspconfig.gopls.setup {
-  on_attach=on_attach,
-  capabilities=capabilities,
-  cmd={"gopls"},
-  filetypes={"go", "gomod", "gowork", "gotmpl"},
-  root_dir=util.root_pattern("go.work", "go.mod", ".git"),
-  settings={
-    gopls={
-      completeUnimported=true,
-      usePlaceholders=true,
-      analyses={
-        fieldalignment=true,
-        unusedparams=true,
-      }
-    }
-  }
-}
-
--- typescript
-lspconfig["ts_ls"].setup {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
-}
+-- read :h vim.lsp.config for changing options of lsp servers 

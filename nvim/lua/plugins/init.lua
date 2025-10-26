@@ -1,25 +1,13 @@
 return {
   {
     "stevearc/conform.nvim",
-    -- event = 'BufWritePre', -- uncomment for format on save
-    config = function()
-      require "configs.conform"
-    end,
+    event = 'BufWritePre', -- uncomment for format on save
+    opts = require "configs.conform",
   },
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "lua-language-server", "stylua", "gopls",
-        "html-lsp", "templ", "css-lsp" , "prettier"
-      },
-    },
-  },
-  -- These are some examples, uncomment them if you want to see them work!
+
   {
     "neovim/nvim-lspconfig",
     config = function()
-      require("nvchad.configs.lspconfig").defaults()
       require "configs.lspconfig"
     end,
   },
@@ -42,6 +30,7 @@ return {
     },
     lazy = false
   },
+
   {
     "mbbill/undotree",
     config = function ()
@@ -49,18 +38,27 @@ return {
     end,
     lazy = false
   },
+  -- test new blink
+  -- { import = "nvchad.blink.lazyspec" },
+
   {
   	"nvim-treesitter/nvim-treesitter",
   	opts = {
   		ensure_installed = {
-  			"vim", "templ", "lua", "vimdoc", "typescript", "javascript",
-       "html", "css", "printf", "vim", "vimdoc", "sql"
+  			"vim", "lua", "vimdoc", "typescript", "javascript",
+       "html", "css", "go", "cpp", "glsl", "go", "php", "cpp"
   		},
+      sync_install = true,
+      auto_install = true,
   	},
-    lazy = false
   },
-  {
-    "sbdchd/neoformat",
-    lazy = false
-  },
+
+  -- Ai autocomplete tool
+  -- {
+  --   "supermaven-inc/supermaven-nvim",
+  --   config = function ()
+  --     require("supermaven-nvim").setup({})
+  --   end,
+  --   lazy = false
+  -- }
 }
