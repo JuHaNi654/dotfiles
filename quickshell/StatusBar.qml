@@ -1,21 +1,21 @@
 import Quickshell
-import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
 import "./tray"
+import "./datetime"
+import "./workspaceControls/"
 
 Scope {
-  id: root 
+  id: root
 
   Variants {
     model: Quickshell.screens
 
     delegate: Component {
       PanelWindow {
+        id: statusBar
         required property var modelData
         screen: modelData
-        
-        id: statusBar
         color: "#FCFB00"
         implicitHeight: 31
 
@@ -25,30 +25,7 @@ Scope {
           right: true
         }
 
-        RowLayout {
-          id: workspaces
-          anchors.verticalCenter: parent.verticalCenter
-          anchors.left: parent.left
-          anchors.leftMargin: 8
-          spacing: 5
-          
-          Button {
-            label: "1"
-          }
-          Button {
-            label: "2"
-          }
-          Button {
-            label: "3"
-          }
-          Button {
-            label: "4"
-          }
-          Button {
-            label: "5"
-          }
-        }
-
+        Workspace {}
 
         RowLayout {
           id: datatime
@@ -56,27 +33,38 @@ Scope {
 
           Text {
             id: time
+            property bool showDate: false
             verticalAlignment: Text.AlignVCenter
-            text: DateTime.showDate ? DateTime.date : DateTime.time
+            text: showDate ? DateTime.date : DateTime.time
 
             MouseArea {
               anchors.fill: parent
               cursorShape: Qt.PointingHandCursor
-              onClicked: DateTime.toggleDate()
+              onClicked: time.toggleDate()
+            }
+
+            function toggleDate() {
+              showDate = !showDate;
             }
           }
         }
 
         RowLayout {
           id: icons
-          spacing: 5
+          Layout.fillHeight: true
           anchors.right: parent.right
           anchors.verticalCenter: parent.verticalCenter
           anchors.rightMargin: 8
 
-          Ethernet { }
-          Volume { }
-          CPU { }
+          Ethernet {
+            implicitHeight: 32
+          }
+          Volume {
+            implicitHeight: 32
+          }
+          CPU {
+            implicitHeight: 32
+          }
         }
       }
     }

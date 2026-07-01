@@ -32,9 +32,9 @@ RowLayout {
 
         onClicked: mouse => {
           if (mouse.button === Qt.RightButton && trayIcon.modelData.hasMenu) {
-            menuAnchor.open()
+            menuAnchor.open();
           } else {
-            tooltipPopup.visible = !tooltipPopup.visible
+            tooltipPopup.visible = !tooltipPopup.visible;
           }
         }
       }
