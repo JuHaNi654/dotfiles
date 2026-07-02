@@ -13,7 +13,9 @@ RowLayout {
   property string current: "1"
 
   Component.onCompleted: {
-    root.current = Hyprland.focusedWorkspace?.name;
+    if (Hyprland.focusedWorkspace?.name) {
+      Hyprland.focusedWorkspace?.name;
+    }
   }
 
   Connections {

@@ -1,6 +1,8 @@
 import QtQuick
+import QtQuick.Shapes
 import QtQuick.Layouts
 import Quickshell.Io
+import "../styles"
 
 Item {
   id: root
@@ -65,15 +67,88 @@ Item {
 
     Repeater {
       model: root.coreUsages
-      delegate: ColumnLayout {
+
+      delegate: Rectangle {
+        id: columnRoot
         required property real modelData
         required property int index
 
+        color: "transparent"
+        implicitWidth: 30 + 8
+        implicitHeight: implicitWidth
+
+        Shape {
+          id: bgShape
+          anchors.fill: parent
+          property int cutSize: 7
+
+          ShapePath {
+            id: bottomRightCorner
+            strokeColor: "transparent"
+            fillColor: Style.color4
+            startX: 0
+            startY: bgShape.cutSize
+
+            PathLine {
+              x: bgShape.cutSize
+              y: 0
+            }
+
+            PathLine {
+              x: bgShape.width - bgShape.cutSize
+              y: 0
+            }
+
+            PathLine {
+              x: bgShape.width
+              y: bgShape.cutSize
+            }
+
+            PathLine {
+              x: bgShape.width
+              y: bgShape.height - bgShape.cutSize
+            }
+
+            PathLine {
+              x: bgShape.width - bgShape.cutSize
+              y: bgShape.height
+            }
+
+            PathLine {
+              x: bgShape.cutSize
+              y: bgShape.height
+            }
+
+            PathLine {
+              x: 0
+              y: bgShape.height - bgShape.cutSize
+            }
+          }
+        }
+
         Text {
-          text: "Core" + parent.index + ": " + Math.round(parent.modelData) + "%"
-          color: "white"
-          font.pixelSize: 10
+          id: coreId
+          text: columnRoot.index + 1
+          anchors.centerIn: parent
+          font.pixelSize: 32
+          font.family: Style.fontFamily
+          font.bold: true
+          topPadding: 4
+          opacity: 0.25
+          color: Style.color0
+        }
+
+        Text {
+          id: label
+          anchors.centerIn: parent
+          text: String(Math.round(columnRoot.modelData)).padStart(3, "0") + "%"
+          color: Style.color0
+          font.pixelSize: 12
+          font.bold: true
+          font.family: Style.fontFamily
+          topPadding: 4
           Layout.alignment: Qt.AlignHCenter
+          opacity: 0.9
         }
       }
     }

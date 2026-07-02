@@ -16,8 +16,8 @@ Button {
   property bool isHover: false
   property bool isActive: (workspaceActive || isHover)
 
-  property color bg: Style.black
-  property color fg: isActive ? Style.blue : Style.red
+  property color bg: Style.color0
+  property color fg: isActive ? Style.color4 : Style.color1
   Behavior on fg {
     ColorAnimation {
       duration: 150
@@ -117,7 +117,9 @@ Button {
   Text {
     anchors.centerIn: parent
     text: button.label
+    font.family: Style.fontFamily
     font.pixelSize: 12
+    topPadding: 2
     font.bold: true
     color: button.fg
   }

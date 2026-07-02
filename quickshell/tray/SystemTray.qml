@@ -1,92 +1,120 @@
+pragma ComponentBehavior: Bound
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.SystemTray
+import QtQuick.Effects
 import Quickshell.Widgets
+import "../styles"
+import "./popup"
 
-RowLayout {
-  id: tray
-  anchors.centerIn: parent
-  spacing: 6
+Item {
+  id: root
+  implicitWidth: btnLoader.implicitWidth
 
-  Repeater {
-    model: SystemTray.items
+  property bool isActive: false
+  property bool isHover: false
+  property color fg: (isActive || isHover) ? Style.color4 : Style.color1
+  Behavior on fg {
+    ColorAnimation {
+      duration: 150
+    }
+  }
 
-    delegate: Item {
-      id: trayIcon
-      required property SystemTrayItem modelData
+  Component {
+    id: button
 
-      width: 24
-      height: 30
+    Button {
+      implicitWidth: Style.buttonW
+      implicitHeight: Style.buttonH
 
-      IconImage {
+      CustomIcon {
+        id: iconElem
         anchors.centerIn: parent
-        implicitSize: 18
-        source: trayIcon.modelData.icon
+        filePath: "icons/arrow_down.svg"
+        fill: root.fg
+      }
+
+      background: IconBackground {
+        borderColor: root.fg
       }
 
       MouseArea {
         anchors.fill: parent
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        hoverEnabled: true
+        scrollGestureEnabled: true
         cursorShape: Qt.PointingHandCursor
+        onEntered: root.isHover = true
+        onExited: root.isHover = false
+        onClicked: root.isActive = !root.isActive
+      }
+    }
+  }
 
-        onClicked: mouse => {
-          if (mouse.button === Qt.RightButton && trayIcon.modelData.hasMenu) {
-            menuAnchor.open();
-          } else {
-            tooltipPopup.visible = !tooltipPopup.visible;
-          }
-        }
+  function setSize(size: int, spacing: int): int {
+    return (size > 0) ? size + spacing : 150;
+  }
+
+  LazyLoader {
+    active: root.isActive
+
+    PopupWindow {
+      id: popup
+      visible: root.isActive
+
+      anchor.item: root
+      anchor.edges: Edges.Bottom    // qmllint disable missing-type
+      anchor.gravity: Edges.Bottom  // qmllint disable missing-type
+
+      implicitWidth: root.setSize(systemTray.implicitWidth, 32)
+      implicitHeight: root.setSize(systemTray.implicitHeight, 16)
+      color: "transparent"
+
+      PopupBorder {
+        color: Style.color0
+        borderColor: Style.color1
       }
 
-      // right-click context menu, using the app's own DBus menu
-      QsMenuAnchor {
-        id: menuAnchor
-        menu: trayIcon.modelData.menu
-        anchor.item: trayIcon
-        anchor.edges: Edges.Bottom
-      }
+      GridLayout {
+        id: systemTray
+        anchors.centerIn: parent
+        columns: 4
+        columnSpacing: 5
 
-      // left-click "tooltip" popup
-      PopupWindow {
-        id: tooltipPopup
-        visible: false
+        Repeater {
+          model: SystemTray.items
 
-        anchor.item: trayIcon
-        anchor.edges: Edges.Bottom
-        anchor.gravity: Edges.Bottom
+          delegate: Rectangle {
+            id: trayIcon
+            required property SystemTrayItem modelData
+            color: "transparent"
 
-        implicitWidth: 240
-        implicitHeight: content.implicitHeight + 16
-        color: "transparent"
+            width: 30
+            height: 30
 
-        Rectangle {
-          anchors.fill: parent
-          radius: 8
-          color: "#2e2e2e"
-          border.color: "#555"
-
-          Column {
-            id: content
-            anchors.fill: parent
-            anchors.margins: 8
-            spacing: 2
-
-            Text {
-              text: trayIcon.modelData.tooltipTitle || trayIcon.modelData.title
-              color: "white"
-              font.bold: true
+            IconImage {
+              id: iconElem
+              anchors.centerIn: parent
+              implicitSize: 18
+              source: trayIcon.modelData.icon
             }
-            Text {
-              text: trayIcon.modelData.tooltipDescription
-              color: "#cccccc"
-              wrapMode: Text.WordWrap
-              width: parent.width
-              visible: text.length > 0
+
+            MultiEffect {
+              anchors.fill: iconElem
+              source: iconElem
+              colorization: 1.0
+              colorizationColor: Style.color4
             }
           }
         }
       }
     }
+  }
+
+  Loader {
+    id: btnLoader
+    sourceComponent: button
+    anchors.centerIn: parent
   }
 }

@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import "./tray"
 import "./datetime"
 import "./workspaceControls/"
+import "./styles"
 
 Scope {
   id: root
@@ -16,7 +17,7 @@ Scope {
         id: statusBar
         required property var modelData
         screen: modelData
-        color: "#FCFB00"
+        color: Style.color3
         implicitHeight: 31
 
         anchors {
@@ -36,6 +37,9 @@ Scope {
             property bool showDate: false
             verticalAlignment: Text.AlignVCenter
             text: showDate ? DateTime.date : DateTime.time
+            font.family: Style.fontFamily
+            font.pixelSize: 14
+            topPadding: 2
 
             MouseArea {
               anchors.fill: parent
@@ -55,6 +59,10 @@ Scope {
           anchors.right: parent.right
           anchors.verticalCenter: parent.verticalCenter
           anchors.rightMargin: 8
+
+          SystemTray {
+            implicitHeight: 32
+          }
 
           Ethernet {
             implicitHeight: 32

@@ -5,7 +5,7 @@ import "../styles"
 
 Item {
   id: root
-  property color fill: "#ffffff"
+  property color fill: Style.color7
   property string filePath: ""
 
   implicitWidth: Style.iconW

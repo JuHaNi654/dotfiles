@@ -4,6 +4,7 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell.Io
 import "../styles"
+import "./popup"
 
 Item {
   id: root
@@ -12,7 +13,7 @@ Item {
   property string iface: ""
   property bool wiredConnected: false
   property bool isHover: false
-  property color fg: isHover ? Style.blue : Style.red
+  property color fg: isHover ? Style.color4 : Style.color1
   Behavior on fg {
     ColorAnimation {
       duration: 150
@@ -80,14 +81,23 @@ Item {
       anchor.edges: Edges.Bottom    // qmllint disable missing-type
       anchor.gravity: Edges.Bottom  // qmllint disable missing-type
 
-      implicitWidth: 250
-      implicitHeight: 100
-      color: "#2e2e2e"
+      implicitWidth: label.implicitWidth * 1.75
+      implicitHeight: label.implicitHeight * 2
+      color: "transparent"
+
+      PopupBorder {
+        color: Style.color0
+        borderColor: Style.color1
+      }
 
       Text {
+        id: label
         anchors.centerIn: parent
         text: root.wiredConnected ? "Connected" : "Disconnected"
-        color: "#ffffff"
+        color: Style.color7
+        font.family: Style.fontFamily
+        topPadding: 4
+        font.pixelSize: 16
       }
     }
   }

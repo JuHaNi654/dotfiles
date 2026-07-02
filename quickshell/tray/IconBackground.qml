@@ -17,13 +17,14 @@ Rectangle {
     ShapePath {
       id: bottomRightCorner
       strokeColor: "transparent"
-      fillColor: Style.black
+      fillColor: Style.color0
       startX: 0
       startY: 0
       PathLine {
         x: bgShape.width - 1
         y: 0
       }
+
       PathLine {
         x: bgShape.width - 1
         y: bgShape.height - 1 - root.cutSize
@@ -32,6 +33,7 @@ Rectangle {
         x: bgShape.width - 1 - root.cutSize
         y: bgShape.height - 1
       }
+
       PathLine {
         x: 0
         y: bgShape.height - 1
@@ -48,10 +50,10 @@ Rectangle {
         strokeColor: root.borderColor
         strokeWidth: 2
         fillColor: "transparent"
-        startX: corners.width - 1
+        startX: corners.width - 2
         startY: 9
         PathLine {
-          x: corners.width - 1
+          x: corners.width - 2
           y: 1
         }
         PathLine {
@@ -65,14 +67,14 @@ Rectangle {
         strokeWidth: 2
         fillColor: "transparent"
         startX: 1
-        startY: corners.height - 9
+        startY: corners.height - 9 - 2
         PathLine {
           x: 1
-          y: corners.height - 1
+          y: corners.height - 2
         }
         PathLine {
           x: 9
-          y: corners.height - 1
+          y: corners.height - 2
         }
       }
     }
