@@ -53,7 +53,7 @@ Item {
   }
 
   function setSize(size: int, spacing: int): int {
-    return (size > 0) ? size + spacing : 150;
+    return (size > 0) ? size + spacing : 50;
   }
 
   LazyLoader {
