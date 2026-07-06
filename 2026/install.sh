@@ -24,6 +24,7 @@ use_rsync() {
     if [ -f $entry ]; then 
       echo " Copying $target to $target_dir"
       rsync -a "$entry" "$target_dir"
+      continue
     fi
 
     target_path="$target_dir/$target"
