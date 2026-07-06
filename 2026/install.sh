@@ -62,11 +62,11 @@ for pkg in "$pkg_dir"/*; do
 
   echo "Checking if $name is installed:"
   if ! command -v "$name" &>/dev/null; then
+    echo -e " ${WARNING}$name not found, skipping installation${NC}"
+    continue
+  else
     echo " $name found, installing config files"
     $install_cmd "$pkg" "$name"
     echo -e " ${SUCCESS}$name config installed successfully${NC}"
-  else
-    echo -e " ${WARNING}$name not found, skipping installation${NC}"
-    continue
   fi
 done
