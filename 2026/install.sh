@@ -1,11 +1,18 @@
 #!/bin/bash
 
+ERROR="\033[0;31m"
+SUCCESS="\033[0;32m"
+WARNING="\033[1;33m"
+NC="\033[0m"
+
 target_dir=$HOME
 pkg_dir="$(pwd)"
 
+echo ""
 echo "Dotfiles installer"
 echo "Target directory: $target_dir"
 echo "PKG directory: $pkg_dir"
+echo ""
 
 use_copy() {
   for target in "$1"/.*; do
@@ -25,10 +32,9 @@ use_stow() {
   stow -t "$target_dir" "$2"
 }
 
-is_installed() {
+is_available() {
   if ! command -v "$1" &>/dev/null; then
-    echo "$1 could not be found"
-    exit 1
+    echo -e "${ERROR}$1 is not available${NC}"
   fi
 }
 
@@ -37,7 +43,7 @@ install_cmd="use_copy"
 # Checks if system has required packages/tools installed
 tools=("stow")
 for tool in "${tools[@]}"; do
-  is_installed "$tool"
+  is_available "$tool"
 done
 
 if ! command -v stow &>/dev/null; then
@@ -47,8 +53,6 @@ else
   install_cmd="use_stow"
 fi
 
-echo ""
-
 for pkg in "$pkg_dir"/*; do
   name=$(basename "$pkg")
 
@@ -57,12 +61,12 @@ for pkg in "$pkg_dir"/*; do
   fi
 
   echo "Checking if $name is installed:"
-  if !command -v "$name" &>/dev/null; then
-    echo " $name not found, skipping installation"
-    continue
-  else
+  if ! command -v "$name" &>/dev/null; then
     echo " $name found, installing config files"
     $install_cmd "$pkg" "$name"
+    echo -e " ${SUCCESS}$name config installed successfully${NC}"
+  else
+    echo -e " ${WARNING}$name not found, skipping installation${NC}"
+    continue
   fi
-  echo " $name config installed successfully"
 done
