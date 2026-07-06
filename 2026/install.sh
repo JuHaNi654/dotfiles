@@ -14,16 +14,37 @@ echo "Target directory: $target_dir"
 echo "PKG directory: $pkg_dir"
 echo ""
 
-use_copy() {
-  for target in "$1"/.*; do
-    if [ "$name" = "." ] || [ "$name" = ".." ]; then
+use_rsync() {
+  for entry in "$1"/.*; do
+    target=$(basename "$entry")
+    if [ "$target" = "." ] || [ "$target" = ".." ]; then
       continue
     fi
 
-    name="$target_dir"/$(basename "$target")
-    for folder in "$target"/*; do
-      echo "Copying $folder to $name"
-      cp -r "$folder" "$name"
+    if [ -f $entry ]; then 
+      echo " Copying $target to $target_dir"
+      rsync -a "$entry" "$target_dir"
+    fi
+
+    target_path="$target_dir/$target"
+    if [ ! -d "$target_path" ]; then 
+      echo " path doesn't exists... creating new one"
+      mkdir -p "$target_path"
+    fi
+
+    for config in "$entry"/*; do
+      config_name=$(basename "$config")
+
+      if [ "$config_name" = "." ] || [ "$config_name" = ".." ]; then
+        continue
+      fi
+
+      echo " Copying $config_name to $target_path"
+      rsync -a "$config" "$target_path"
+      if [ $? -ne 0 ]; then
+        echo "quitting installation"
+        exit 1
+      fi 
     done
   done
 }
@@ -38,16 +59,21 @@ is_available() {
   fi
 }
 
-install_cmd="use_copy"
+install_cmd="use_rsync"
 
 # Checks if system has required packages/tools installed
-tools=("stow")
+tools=("stow", "rsync")
 for tool in "${tools[@]}"; do
   is_available "$tool"
 done
 
 if ! command -v stow &>/dev/null; then
-  echo "Stow not found. Fallback to copying config files"
+  if ! command -v rsync &>/dev/null; then 
+    echo "no stow or rsync found in system... quitting installation"
+    exit 1
+  fi
+
+  echo "Stow not found. Fallback to rsync"
 else
   echo "Using stow to install config files"
   install_cmd="use_stow"
